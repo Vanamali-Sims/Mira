@@ -1,0 +1,22 @@
+side_quests = [
+    "Take a 10-minute mindful walk outside and notice the details around you.",
+    "Spend 5 minutes doing a guided meditation or deep breathing exercise.",
+    "Write down three things you're grateful for today.",
+    "Listen to your favorite uplifting song or discover a new one.",
+    "Do a short stretching routine or a few yoga poses.",
+    "Prepare and enjoy a healthy snack or drink mindfully.",
+    "Reach out to a friend or family member for a brief chat or check-in.",
+    "Take a digital detox break—no screens for 15 minutes.",
+    "Write a brief journal entry about something positive that happened.",
+    "Perform a random act of kindness, like complimenting a stranger.",
+    "Watch a short, funny video or a comedy clip to lighten your mood.",
+    "Read a few pages of a book or a motivational article.",
+    "Tidy up a small area of your living space for a sense of order.",
+    "Engage in a creative activity like sketching, doodling, or coloring.",
+    "Try a body scan exercise: focus on relaxing each part of your body.",
+    "Step outside and observe nature—notice the sky, trees, or birds.",
+    "Write a positive note to yourself and display it somewhere visible.",
+    "Try a short dance session to your favorite upbeat tune.",
+    "Make a cup of tea or coffee and savor the moment with mindfulness.",
+    "Plan one small fun activity for tomorrow to look forward to."
+]
