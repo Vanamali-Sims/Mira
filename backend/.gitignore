@@ -1,0 +1,23 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and debugging files
+*.log
+debug.log
+
+# Ignore database files if using SQLite
+*.sqlite3
+
+# Environment variables
+.env
+
+# Ignore FastAPI cache and temporary files
+__pycache__/
+backend/__pycache__/
