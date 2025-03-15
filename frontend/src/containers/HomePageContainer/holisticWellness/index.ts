@@ -1,0 +1,1 @@
+export { HolisticWellness } from "./holisticWellness";

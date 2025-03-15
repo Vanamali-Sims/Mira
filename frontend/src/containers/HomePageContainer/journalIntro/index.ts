@@ -1,0 +1,1 @@
+export { JournalIntro } from "./journalIntro";

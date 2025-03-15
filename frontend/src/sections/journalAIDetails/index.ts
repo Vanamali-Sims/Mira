@@ -1,0 +1,1 @@
+export {JournalAIDetails} from "./journalAIDetails";
