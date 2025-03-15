@@ -29,6 +29,7 @@ app.add_middleware(
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # ---------- Data Models ----------
 class ErrorResponse(BaseModel):
     detail: str = Field(..., example="Invalid location format")
