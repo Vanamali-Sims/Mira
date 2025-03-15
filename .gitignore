@@ -21,7 +21,7 @@ __pycache__/
 .env.*
 
 # Ignore ML model files and datasets
-ml/model/
+ml/model/pytorch_model.bin
 ml/results/
 ml/*.ckpt
 ml/*.bin
