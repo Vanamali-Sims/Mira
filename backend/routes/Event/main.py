@@ -73,7 +73,15 @@ TYPE_MAPPING = {
     "community_center": "community_center",
     "social_work": "social_services"
 }
-
+@app.get("/")
+async def root():
+    return {
+        "message": "Mental Health Support Services Locator API",
+        "documentation": "/docs",
+        "endpoints": {
+            "services": "/api/events"
+        }
+    }
 @app.get("/api/events", 
         response_model=List[EventResponse],
         responses={400: {"model": ErrorResponse}, 500: {"model": ErrorResponse}})
