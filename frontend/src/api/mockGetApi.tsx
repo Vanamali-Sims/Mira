@@ -9,9 +9,9 @@ const FastAPIGetHook = () => {
   const getSomeData = async () => {
     setIsLoading(true);
     await axios
-      .get("http://127.0.0.1:8000/hello")
+      .get("http://127.0.0.1:8000/api/events")
       .then((response) => {
-        setResponse(response.data.message);
+        setResponse(response);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -23,4 +23,4 @@ const FastAPIGetHook = () => {
   return { response, isLoading, getSomeData };
 };
 
-export { FastAPIGetHook as FastAPIHook };
+export { FastAPIGetHook };
