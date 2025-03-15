@@ -13,11 +13,30 @@ const Journal = () => {
     setText(e.target.value);
   };
 
-  const handlePrompt = () => {
-    setGeneratedFeedback("This is the generated feedback"); // Replace with actual functionality
+  const handlePrompt = async () => {
+    if (!text.trim()) {
+      alert("Please enter a journal entry.");
+      return;
+    }
+  
     setShowGeneratedFeedback(true);
-    alert("Generating prompt..."); // Replace with actual functionality
+    setGeneratedFeedback("Generating response..."); // Temporary loading state
+  
+    try {
+      const response = await fetch("http://127.0.0.1:8009/api/generate/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ entry: text }),
+      });
+  
+      const data = await response.json();
+      setGeneratedFeedback(data.response || "No response received.");
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+      setGeneratedFeedback("Failed to generate a response. Please try again.");
+    }
   };
+  
 
   const handleReset = () => {
     setText("");

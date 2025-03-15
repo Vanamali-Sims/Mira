@@ -8,7 +8,7 @@ import torch
 app = FastAPI()
 
 # Load the fine-tuned GPT-2 model and tokenizer
-MODEL_PATH = "ml/model"  # Ensure your model is inside 'ml/model/'
+MODEL_PATH = r'C:\Users\isvan\OneDrive\Documents\Van-Cave\Hackathons\Mira\ml\model'
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = GPT2LMHeadModel.from_pretrained(MODEL_PATH)
 model.eval()
