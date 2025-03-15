@@ -2,10 +2,21 @@ import random
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from fastapi.middleware.cors import CORSMiddleware
 import torch
 
 # Initialize FastAPI
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Adjust if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Load the fine-tuned GPT-2 model and tokenizer
 MODEL_PATH = r'C:\Users\isvan\OneDrive\Documents\Van-Cave\Hackathons\Mira\ml\model'
