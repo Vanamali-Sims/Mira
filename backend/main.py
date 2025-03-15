@@ -8,16 +8,21 @@ import torch
 app = FastAPI()
 
 # Load the fine-tuned GPT-2 model and tokenizer
-MODEL_PATH = "ml/model"  # Ensure your model is inside 'ml/model/'
+import os
+
+MODEL_PATH = r'C:\Users\isvan\OneDrive\Documents\Van-Cave\Hackathons\Mira\ml\model'
+
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 model = GPT2LMHeadModel.from_pretrained(MODEL_PATH)
+
+
 model.eval()
 
 # Define Journal Entry Schema
 class JournalEntry(BaseModel):
     entry: str
 
-@app.post("/api/generate/")
+@app.post("/generate/")
 async def generate_response(journal_entry: JournalEntry):
     try:
         # Stronger soft prompt for empathy and relevance
