@@ -16,7 +16,7 @@ const Navbar = () => {
           <li className="hover:underline cursor-pointer"><Link to="/">Home</Link></li>
           <li className="hover:underline cursor-pointer"><Link to="/journal">Journal AI</Link></li>
           <li className="hover:underline cursor-pointer"><Link to="/quests">Quests</Link></li>
-          <li className="hover:underline cursor-pointer"><Link to="/rewards">Rewards</Link></li>
+          {/* <li className="hover:underline cursor-pointer"><Link to="/rewards">Rewards</Link></li> */}
           <li className="hover:underline cursor-pointer"><Link to="/partners">Partners</Link></li>
         </ul>
       </div>

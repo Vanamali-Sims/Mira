@@ -11,15 +11,13 @@ const BusinessPortal: React.FC = () => {
         className="w-80 h-auto absolute bottom-10 left-10 opacity-80"
       />
       <img
-        src="src/assets/HolisticWellnessImage.svg"
-        alt="Background Right"
-        className="w-80 h-auto absolute top-10 right-10 opacity-80"
-      />
-
-      {/* Page Content */}
-      <div className="text-center max-w-2xl">
-        <h1 className="text-4xl font-extrabold text-gray-900 leading-tight mb-4">
-          Welcome to <span className="text-green-600">Mira Business Portal</span>
+          src="src/assets/mindfulMomentsImage.svg"
+          alt="Mindful Moments"
+          className="w-96 h-auto absolute top-0 right-0 z-[-1]"
+        />
+      <div className="opacity-[80%]">
+        <h1 className="text-3xl font-bold mb-4">
+          welcome to the business portal
         </h1>
         <p className="text-lg text-gray-600 mb-6">
           Your one-stop solution for managing your business needs.

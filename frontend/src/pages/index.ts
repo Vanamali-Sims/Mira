@@ -3,11 +3,13 @@ import Home from "./Home";
 import Journal from "./Journal";
 import Quests from "./Quests";
 import Rewards from "./Rewards";
+import Login from "./Login";
 
 export {
     BusinessPortal,
     Home,
     Journal,
     Quests,
-    Rewards
+    Rewards,
+    Login
 }
