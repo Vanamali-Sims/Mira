@@ -1,36 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
 import { useNavigate } from "react-router-dom";
-
-const rewards = [
-  {
-    id: 1,
-    title: "Exclusive Discount",
-    description: "Get 20% off on your next purchase.",
-    code: "SAVE20",
-    image: "src/assets/rewardsImage1.jpg",
-  },
-  {
-    id: 2,
-    title: "Free Shipping",
-    description: "Enjoy free shipping on orders above $50.",
-    code: "FREESHIP",
-    image: "src/assets/rewardsImage2.jpg",
-  },
-  {
-    id: 3,
-    title: "Bonus Points",
-    description: "Earn 500 bonus points for your next redemption.",
-    code: "BONUS500",
-    image: "src/assets/rewardsImage1.jpg",
-  },
-];
+import { dummyRewardsData } from "../constants/common";
 
 const Rewards = () => {
   const navigate = useNavigate();
 
   const handleClaim = (code: string) => {
-    navigate("/");
+    navigate("/home");
     window.open(
       `https://www.canva.com/design/DAGh2lfUTTg/EYP1-A03C13nKfpYsUZImw/edit?utm_content=DAGh2lfUTTg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton`,
       "_blank"
@@ -44,7 +20,7 @@ const Rewards = () => {
           Choose your rewards
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {rewards.map((reward) => (
+          {dummyRewardsData.map((reward) => (
             <div
               key={reward.id}
               className="relative bg-cover bg-center rounded-lg shadow-md overflow-hidden h-48 flex items-end p-4"

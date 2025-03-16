@@ -15,7 +15,7 @@ const FooterSection = () => {
           <h3 className="font-semibold mb-2">Quick Links</h3>
           <ul className="space-y-1 text-sm">
             <li>
-              <a href="/" className="hover:underline">
+              <a href="/home" className="hover:underline">
                 Home
               </a>
             </li>

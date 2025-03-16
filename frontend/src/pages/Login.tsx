@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -21,9 +24,7 @@ const Login = () => {
       />
       <div className="flex justify-center items-center h-full">
         <div className="bg-white p-8 rounded-2xl shadow-xl w-96 text-center border-2 border-[#f4ece3] relative opacity-80">
-          <h2 className="text-2xl font-bold mb-4 ">
-            Login to Mira
-          </h2>
+          <h2 className="text-2xl font-bold mb-4 ">Login to Mira</h2>
           <form className="space-y-4">
             <div>
               <label className="block text-left font-semibold text-gray-700">
@@ -57,7 +58,9 @@ const Login = () => {
               </div>
             </div>
             <button
-              type="submit"
+              onClick={() => {
+                navigate("/home");
+              }}
               className="w-full bg-blue-500 text-white p-3 rounded-lg text-lg font-semibold shadow-md hover:bg-blue-600 transition"
             >
               Login

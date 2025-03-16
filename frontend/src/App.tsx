@@ -19,12 +19,12 @@ function App() {
           button1
        </button> */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/quests" element={<Quests />} />
           <Route path="/rewards" element={<Rewards />} />
           <Route path="/partners" element={<BusinessPortal />} />
-          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>

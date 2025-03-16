@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { QuestForm } from "../containers/QuestsPageContainer";
 import { CgAlignLeft } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { dummyPersonalResponses } from "../constants/common";
 
 const Quests: React.FC = () => {
-
   const navigate = useNavigate();
   const [quest, setQuest] = useState<string>("");
   const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ const Quests: React.FC = () => {
   const handleSubmit = (data: any) => {
     console.info("Form Submitted", data);
     console.info("call api and set response in quest");
-    setQuest("response from api");
+    setQuest(dummyPersonalResponses[Math.floor(Math.random() * dummyPersonalResponses.length)]);
   };
 
   return (

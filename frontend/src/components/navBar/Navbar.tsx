@@ -11,15 +11,23 @@ const Navbar = () => {
         />
         <h1 className="text-xl font-bold">Mira</h1>
       </div>
-      <div className="flex gap-10 items-center">
-        <ul className="flex gap-6">
-          <li className="hover:underline cursor-pointer"><Link to="/">Home</Link></li>
-          <li className="hover:underline cursor-pointer"><Link to="/journal">Journal AI</Link></li>
-          <li className="hover:underline cursor-pointer"><Link to="/quests">Quests</Link></li>
-          {/* <li className="hover:underline cursor-pointer"><Link to="/rewards">Rewards</Link></li> */}
-          <li className="hover:underline cursor-pointer"><Link to="/partners">Partners</Link></li>
-        </ul>
-      </div>
+        <div className="flex gap-10 items-center">
+          <ul className="flex gap-6">
+            <li className="hover:underline cursor-pointer">
+              <Link to="/home">Home</Link>
+            </li>
+            <li className="hover:underline cursor-pointer">
+              <Link to="/journal">Journal AI</Link>
+            </li>
+            <li className="hover:underline cursor-pointer">
+              <Link to="/quests">Quests</Link>
+            </li>
+            {/* <li className="hover:underline cursor-pointer"><Link to="/rewards">Rewards</Link></li> */}
+            <li className="hover:underline cursor-pointer">
+              <Link to="/partners">Partners</Link>
+            </li>
+          </ul>
+        </div>
     </nav>
   );
 };
