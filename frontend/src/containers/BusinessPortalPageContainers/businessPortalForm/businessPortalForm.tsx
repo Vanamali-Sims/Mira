@@ -22,7 +22,7 @@ const BusinessPortalForm = () => {
   };
 
   return (
-    <Card className="max-w-lg mx-auto mt-10 p-6 shadow-lg rounded-2xl">
+    <Card className="max-w-lg mx-auto mt-10 p-6 shadow-lg rounded-[30] opacity-80" style={{ borderRadius: "30px" }}>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex gap-4">

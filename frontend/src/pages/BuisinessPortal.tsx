@@ -10,10 +10,10 @@ const BusinessPortal: React.FC = () => {
         className="w-96 h-auto absolute bottom-0 left-0 z-[-1]"
       />
       <img
-        src="src/assets/HolisticWellnessImage.svg"
-        alt="Holistic Wellness"
-        className="w-96 h-auto absolute top-0 right-0 z-[-1]"
-      />
+          src="src/assets/mindfulMomentsImage.svg"
+          alt="Mindful Moments"
+          className="w-96 h-auto absolute top-0 right-0 z-[-1]"
+        />
       <div className="opacity-[80%]">
         <h1 className="text-3xl font-bold mb-4">
           welcome to the business portal
