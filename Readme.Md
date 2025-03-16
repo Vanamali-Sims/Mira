@@ -60,21 +60,18 @@ Mira aims to make small but meaningful changes in your day, like a nudge from a 
 
 ## 📦 Project Structure (minimal & cozy)
 
-```
 Mira/
-├── backend/          # FastAPI app & AI logic
+├── backend/                # FastAPI app & AI logic
 │   ├── main.py
 │   ├── database.py
 │   ├── schemas.py
-│   └── ml/           # Your fine-tuned GPT-2 model here
-├── frontend/         # React frontend (beautiful & simple)
+│   └── ml/                 # Your fine-tuned GPT-2 model here
+├── frontend/               # React frontend (beautiful & simple)
 │   └── src/
 │       └── components/
-├── test.db           # SQLite database (auto-generated)
+├── test.db                 # SQLite database (auto-generated)
 └── README.md
-```
 
----
 
 ## 🚀 How to Start Mira
 
