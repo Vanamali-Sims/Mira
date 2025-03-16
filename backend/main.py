@@ -1,10 +1,15 @@
 import random
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from transformers import pipeline
 from pydantic import BaseModel
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from fastapi.middleware.cors import CORSMiddleware
 import torch
+from fastapi.responses import FileResponse
+from database import SessionLocal, Event, init_db
+from schemas import EventCreate, EventResponse
+from sqlalchemy.orm import Session
+from datetime import datetime
 
 # Initialize FastAPI
 app = FastAPI()
@@ -96,6 +101,17 @@ small_generator = pipeline(
     truncation=True
 )
 
+#Database code
+init_db()
+
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        
 
 
 @app.get("/")
@@ -135,3 +151,18 @@ async def generate_side_quest(data: SideQuestRequest):
         return {"quest": quest}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Generation error: {str(e)}")
+
+@app.post("/create_event/", response_model=EventResponse)
+def create_event(event: EventCreate, db: Session = Depends(get_db)):
+    db_event = Event(
+        event_name=event.event_name,
+        organized_by=event.organized_by,
+        date=event.date,
+        location=event.location,
+        time=event.time,
+        allowed_gender=event.allowed_gender
+    )
+    db.add(db_event)
+    db.commit()
+    db.refresh(db_event)
+    return db_event
