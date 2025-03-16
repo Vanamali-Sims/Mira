@@ -1,6 +1,3 @@
-Here’s your ✨ **polished README with an ASCII logo & a warm message**:
-
----
 
 ```markdown
 ```
@@ -122,4 +119,3 @@ Team Mira 💚**
 
 ```
 
-Would you like me to also give you a light version of this (for public GitHub profile badges etc.)? 😄
