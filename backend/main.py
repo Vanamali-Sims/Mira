@@ -1,9 +1,15 @@
 import random
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
+from transformers import pipeline
 from pydantic import BaseModel
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 from fastapi.middleware.cors import CORSMiddleware
 import torch
+from fastapi.responses import FileResponse
+from database import SessionLocal, Event, init_db
+from schemas import EventCreate, EventResponse
+from sqlalchemy.orm import Session
+from datetime import datetime
 
 # Initialize FastAPI
 app = FastAPI()
@@ -28,47 +34,56 @@ model.eval()
 class JournalEntry(BaseModel):
     entry: str
 
-@app.post("/api/generate/")
-async def generate_response(journal_entry: JournalEntry):
+class SideQuestRequest(BaseModel):
+    age: int
+    mbti: str
+    keyword: str
+    is_international_student: bool
+
+
+@app.post("/api/personalized-quest/")
+async def generate_side_quest(data: SideQuestRequest):
+    # In-context priming examples
+    soft_prompt = (
+        "You are an assistant generating short and quirky daily wellness quests. "
+        "Based on the user's age, MBTI type, international student status, and a symbolic keyword, "
+        "you suggest one fun, simple task that could brighten their day.\n\n"
+
+        "Examples:\n"
+        "User: 25-year-old ENFP, international student, keyword: Rain\n"
+        "Quest: Take a relaxing 15-minute walk under the drizzle while listening to lo-fi beats.\n\n"
+        "User: 30-year-old ISTJ, not an international student, keyword: Earth\n"
+        "Quest: Water your houseplants and text a friend about your favorite nature spot.\n\n"
+        "User: 19-year-old INFP, international student, keyword: Valley\n"
+        "Quest: Sketch a peaceful valley scene and share it with someone close.\n\n"
+
+        # 👇 Your actual dynamic user input comes here
+        f"User: {data.age}-year-old {data.mbti}, "
+        f"{'international student' if data.is_international_student else 'not an international student'}, "
+        f"keyword: {data.keyword}\n"
+        "Quest:"
+    )
+
     try:
-        # Stronger soft prompt for empathy and relevance
-        soft_prompt = (
-            "You are a kind and understanding friend. "
-            "Acknowledge their feelings and respond with empathy. "
-            "Address specific emotions they mentioned. "
-            "Provide encouragement and remind them of their strength. "
-            "Do NOT change the topic or assume they are feeling better."
-        )
-        input_text = soft_prompt + " " + journal_entry.entry
+        output = small_generator(
+            soft_prompt,
+            num_return_sequences=1,
+            temperature=0.85,
+            top_p=0.9
+        )[0]['generated_text']
 
-        # Tokenize input with truncation
-        input_ids = tokenizer.encode(
-            input_text, 
-            return_tensors="pt", 
-            truncation=True,  
-            max_length=512  
-        )
+        # Post-processing to stop "leakage"
+        quest = output.replace(soft_prompt, "").strip().strip('"').strip()
 
-        # Generate response with improved settings
-        with torch.no_grad():
-            output = model.generate(
-                input_ids,
-                max_length=min(400, input_ids.shape[-1] + 200),  # Ensure longer responses
-                temperature=0.7,  
-                top_p=0.9,  
-                repetition_penalty=1.3,  # Stronger penalty for repeating words
-                no_repeat_ngram_size=4,  # Prevent repetitive phrases
-                num_beams=5,  # Use beam search for coherence
-                num_return_sequences=1,  # Ensure the best response is selected
-                do_sample=False,  # Keep responses logical
-                eos_token_id=tokenizer.eos_token_id  # Stop at a natural point
-            )
+        if "User:" in quest:
+            quest = quest.split("User:")[0].strip()
+        if len(quest) > 150:
+            quest = quest[:150].rsplit(".", 1)[0] + "."
 
-        response_text = tokenizer.decode(output[:, input_ids.shape[-1]:][0], skip_special_tokens=True)
-        return {"response": response_text}
+        return {"quest": quest}
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Generation error: {str(e)}")
 
 # Side quests data (dummy example, replace with real data)
 side_quests = [
@@ -78,9 +93,30 @@ side_quests = [
     "Try cooking a meal you've never made before."
 ]
 
+
+small_generator = pipeline(
+    "text-generation",
+    model="distilgpt2",
+    max_new_tokens=30,     # Make it default across all calls
+    truncation=True
+)
+
+#Database code
+init_db()
+
+# Dependency to get the database session
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        
+
+
 @app.get("/")
 async def read_root():
-    return {"message": "Hello FastAPI!"}
+    return {"message": "Let's get you to meet mira!"}
 
 @app.get("/journal")
 async def get_journal():
@@ -90,3 +126,43 @@ async def get_journal():
 async def get_quest():
     quest = random.choice(side_quests)
     return {"quest": quest}
+
+@app.post("/api/personalized-quest/")
+async def generate_side_quest(data: SideQuestRequest):
+    # Compose soft prompt
+    soft_prompt = (
+        f"Suggest a personalized wellness quest for a {data.age}-year-old "
+        f"{data.mbti} personality type who {'is' if data.is_international_student else 'is not'} an international student. "
+        f"The task should be influenced by the keyword: {data.keyword}. "
+        f"Make it positive and actionable:"
+    )
+
+    # Generate quest
+    try:
+        output = small_generator(
+            soft_prompt,
+            max_length=60,
+            num_return_sequences=1,
+            temperature=0.8
+        )[0]['generated_text']
+
+        # Extract quest text
+        quest = output.replace(soft_prompt, "").strip()
+        return {"quest": quest}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Generation error: {str(e)}")
+
+@app.post("/create_event/", response_model=EventResponse)
+def create_event(event: EventCreate, db: Session = Depends(get_db)):
+    db_event = Event(
+        event_name=event.event_name,
+        organized_by=event.organized_by,
+        date=event.date,
+        location=event.location,
+        time=event.time,
+        allowed_gender=event.allowed_gender
+    )
+    db.add(db_event)
+    db.commit()
+    db.refresh(db_event)
+    return db_event

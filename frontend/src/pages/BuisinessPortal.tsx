@@ -3,11 +3,12 @@ import { BusinessPortalForm } from "../containers/BusinessPortalPageContainers/b
 
 const BusinessPortal: React.FC = () => {
   return (
-    <div className="text-center p-5">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-800 px-6">
+      {/* Background Images */}
       <img
         src="src/assets/mindfullnessSectionImage.svg"
-        alt="Holistic Wellness"
-        className="w-96 h-auto absolute bottom-0 left-0 z-[-1]"
+        alt="Background Left"
+        className="w-80 h-auto absolute bottom-10 left-10 opacity-80"
       />
       <img
           src="src/assets/mindfulMomentsImage.svg"
@@ -18,17 +19,23 @@ const BusinessPortal: React.FC = () => {
         <h1 className="text-3xl font-bold mb-4">
           welcome to the business portal
         </h1>
-        <p className="text-lg mb-6">
+        <p className="text-lg text-gray-600 mb-6">
           Your one-stop solution for managing your business needs.
         </p>
+
+        {/* Feature Button */}
         <button
-          className="px-6 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="px-6 py-3 text-lg font-semibold text-white bg-green-600 rounded-full shadow-md hover:bg-green-700 transition-all"
           onClick={() => alert("Feature coming soon!")}
         >
           Explore Features
         </button>
       </div>
-      <BusinessPortalForm />
+
+      {/* Business Form Section */}
+      <div className="mt-8 w-full max-w-lg bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+        <BusinessPortalForm />
+      </div>
     </div>
   );
 };
