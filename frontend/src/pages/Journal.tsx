@@ -23,7 +23,7 @@ const Journal = () => {
     setGeneratedFeedback("Generating response..."); // Temporary loading state
   
     try {
-      const response = await fetch("http://127.0.0.1:8009/api/generate/", {
+      const response = await fetch("http://127.0.0.1:8004/api/generate/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ entry: text }),
