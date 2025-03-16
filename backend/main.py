@@ -131,11 +131,21 @@ async def get_quest():
 async def generate_side_quest(data: SideQuestRequest):
     # Compose soft prompt
     soft_prompt = (
-        f"Suggest a personalized wellness quest for a {data.age}-year-old "
-        f"{data.mbti} personality type who {'is' if data.is_international_student else 'is not'} an international student. "
-        f"The task should be influenced by the keyword: {data.keyword}. "
-        f"Make it positive and actionable:"
+        "You are a helpful wellness coach. ONLY suggest a short, mundane and realistic daily quest to improve wellbeing. "
+        "The quest must be:\n"
+        "- Simple\n"
+        "- Take less than 30 minutes\n"
+        "- Realistic and doable today\n"
+        "- One single actionable task\n"
+        "- No follow-up explanations, no extra advice.\n\n"
+        "DO NOT explain the quest. DO NOT add 'Example' or other commentary. ONLY output the quest.\n\n"
+        f"User Profile:\n- Age: {data.age}\n- MBTI: {data.mbti}\n- Keyword: {data.keyword}\n"
+        f"- International Student: {'Yes' if data.is_international_student else 'No'}\n\n"
+        "Side Quest:"
     )
+
+
+
 
     # Generate quest
     try:
@@ -143,7 +153,9 @@ async def generate_side_quest(data: SideQuestRequest):
             soft_prompt,
             max_length=60,
             num_return_sequences=1,
-            temperature=0.8
+            temperature=0.6,
+            top_p=0.9,
+            repetetion_penalty=1.2
         )[0]['generated_text']
 
         # Extract quest text
