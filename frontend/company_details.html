@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Excel File</title>
+</head>
+<body>
+    <h1>Upload Excel File</h1>
+    <form id="upload-form">
+        <input type="file" id="file-input" name="file" accept=".xlsx" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Extracted Data:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('file-input');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('/extract-data', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the file.');
+            });
+        });
+    </script>
+</body>
+</html>
